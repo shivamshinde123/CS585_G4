@@ -1,0 +1,18 @@
+rm ./*.class
+javac ./*.java
+jar cf job.jar ./*.class
+
+hadoop jar job.jar WordCountDriver
+
+core-site.xml hdfs-site.xml
+hdfs namenode -format
+hdfs dfs -rm -r /user/zhiyang/output
+hdfs dfs -rm /user/zhiyang/data.txt
+hdfs dfs -put ./data.txt /user/zhiyang/data.txt
+hadoop fs -put ./data.txt /user/zhiyang/data.txt
+
+hadoop jar job.jar JobDriver
+hadoop fs -cat /user/zhiyang/output/part-r-00000
+hdfs dfs -getmerge /home/zhiyang/output/project3a.txt /home/zhiyang/output/project3a_merged.txt
+
+
